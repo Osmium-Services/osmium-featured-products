@@ -35,7 +35,7 @@ class FeaturedWidget
         return [
             'id' => 'featured-products-attention',
             'title' => 'Featured products',
-            'icon' => 'bx-star',
+            'icon' => 'bx-crown',
             'roles' => ['admin', 'editor'],
             'order' => 60,
             'cols' => 'col-12 col-lg-6',

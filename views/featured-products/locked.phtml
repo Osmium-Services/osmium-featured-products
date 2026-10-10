@@ -1,0 +1,27 @@
+<?php
+$pageHeader = ['trail' => 'Content / Shop /', 'title' => 'Featured Products'];
+include 'app/modules/admin/views/partials/page-header.phtml';
+?>
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px;">
+    <div class="position-relative mb-3">
+        <?php if ($admin['lockInfo']['avatarExists'] ?? false): ?>
+            <img src="<?= $admin['avatarUrl'] ?><?= \htmlspecialchars($admin['lockInfo']['avatar'] ?? '') ?>"
+                class="rounded-circle" style="width: 80px; height: 80px; object-fit: cover;">
+        <?php else: ?>
+            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center"
+                style="width: 80px; height: 80px; font-size: 2rem; color: white;">
+                <?= \htmlspecialchars($admin['lockInfo']['initials'] ?? '') ?>
+            </div>
+        <?php endif; ?>
+        <span class="position-absolute rounded-circle d-flex align-items-center justify-content-center"
+            style="bottom: -5px; right: -5px; width: 28px; height: 28px; background: #fff;">
+            <i class="bx bx-lock-alt" style="font-size: 1.1rem; color: #697a8d;"></i>
+        </span>
+    </div>
+    <h5 class="mb-1"><?= \htmlspecialchars($admin['lockInfo']['user_name'] ?? '') ?></h5>
+    <p class="text-muted text-center mb-2">is currently editing featured products</p>
+    <small class="text-muted">Started <?= $admin['lockInfo']['started_at'] ?? '' ?></small>
+</div>
+
+<script src="/assets/services/osmium-featured-products/featured-products-locked.js<?= $adminAssetVersion('/assets/services/osmium-featured-products/featured-products-locked.js') ?>"></script>

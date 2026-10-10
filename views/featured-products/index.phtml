@@ -1,0 +1,78 @@
+<?php
+$pageHeader = ['trail' => 'Content / Shop /', 'title' => 'Featured Products'];
+include 'app/modules/admin/views/partials/page-header.phtml';
+include 'app/modules/admin/views/partials/backup-bar.phtml';
+?>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <?php if (($admin['unavailableCount'] ?? 0) > 0): ?>
+            <div class="alert alert-danger border-danger d-flex align-items-center mb-4" role="alert">
+                <i class="bx bx-error-circle me-2" style="font-size: 1.5rem;"></i>
+                <div>
+                    <strong><?= $admin['unavailableCount'] ?> featured product<?= $admin['unavailableCount'] > 1 ? 's have' : ' has' ?> issues.</strong>
+                    <br><small>Products with issues won't display correctly where they are shown. Please review and replace them.</small>
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if ($admin['emptySlotCount'] > 0): ?>
+            <div class="alert alert-warning border-warning d-flex align-items-center mb-4" role="alert">
+                <i class="bx bx-info-circle me-2" style="font-size: 1.5rem;"></i>
+                <div>
+                    <strong><?= $admin['emptySlotCount'] ?> slot<?= $admin['emptySlotCount'] > 1 ? 's are' : ' is' ?> empty.</strong>
+                    <br><small>Fewer than 5 featured products will be shown. Click an empty slot to add a product.</small>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bx bx-star me-2"></i>Featured Products</h5>
+                <small class="text-muted">Click to change product, drag to reorder</small>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush" id="featuredProductsList">
+                    <?php foreach ($admin['featuredProducts'] as $index => $slot): ?>
+                        <div class="list-group-item featured-product-slot d-flex align-items-center gap-3 <?= $slot['product_id'] ? '' : 'bg-light' ?> <?= ($slot['has_issues'] ?? false) ? 'border-danger border-2' : '' ?>"
+                            data-slot-sort="<?= $slot['sort'] ?>"
+                            data-product-id="<?= $slot['product_id'] ?? '' ?>">
+                            <i class="bx bx-menu drag-handle text-muted" style="cursor: grab;" title="Drag to reorder"></i>
+                            <span class="badge bg-primary slot-number">#<?= $index + 1 ?></span>
+                            <?php if ($slot['product_id'] && $slot['thumbnail']): ?>
+                                <img src="<?= \htmlspecialchars($slot['thumbnail'] ?? '') ?>"
+                                    alt="<?= \htmlspecialchars($slot['title'] ?? '') ?>"
+                                    style="width: 60px; height: 60px; object-fit: contain; border-radius: 4px; mix-blend-mode: multiply; <?= ($slot['has_issues'] ?? false) ? 'opacity: 0.5;' : '' ?>">
+                                <div class="flex-grow-1 slot-content" style="cursor: pointer;" data-call="openProductSelector" data-args='["@parent"]'>
+                                    <strong><?= \htmlspecialchars($slot['title'] ?? '') ?></strong>
+                                    <?php if (!empty($slot['issues'])): ?>
+                                        <?php foreach ($slot['issues'] as $issue): ?>
+                                            <span class="badge bg-danger ms-1"><?= \htmlspecialchars($issue ?? '') ?></span>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+                            <?php else: ?>
+                                <div style="width: 60px; height: 60px; background: #f8f9fa; border-radius: 4px;" class="d-flex align-items-center justify-content-center">
+                                    <i class="bx bx-plus-circle text-muted" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div class="flex-grow-1 text-muted slot-content" style="cursor: pointer;" data-call="openProductSelector" data-args='["@parent"]'>
+                                    <em>Empty Slot - Click to add product</em>
+                                </div>
+                            <?php endif; ?>
+                            <i class="bx bx-chevron-right text-muted" style="cursor: pointer;" data-call="openProductSelector" data-args='["@parent"]'></i>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include __DIR__ . '/partials/product-modal.phtml'; ?>
+
+<link rel="stylesheet" href="/assets/services/osmium-featured-products/featured-products.css<?= $adminAssetVersion('/assets/services/osmium-featured-products/featured-products.css') ?>">
+<script nonce="<?= $cspNonce ?>">
+    window.FeaturedProductsConfig = {
+        hasOwnBackup: <?= $admin['hasOwnBackup'] ? 'true' : 'false' ?>
+    };
+</script>
+<script src="/assets/services/osmium-featured-products/featured-products.js<?= $adminAssetVersion('/assets/services/osmium-featured-products/featured-products.js') ?>"></script>

@@ -1,0 +1,21 @@
+/**
+ * Featured Products - Page styles
+ */
+
+.featured-product-slot {
+    transition: background-color 0.2s;
+}
+
+.featured-product-slot:hover {
+    background-color: #f8f9fa !important;
+}
+
+.product-select-card {
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.product-select-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}

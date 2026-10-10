@@ -1,0 +1,59 @@
+<div class="modal fade" id="productSelectorModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Product for Slot <span id="selectedSlotNumber"></span> <small class="text-muted fw-normal">(<?= \count($admin['allProducts']) ?> available)</small></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="productSearch" placeholder="Search products...">
+                </div>
+                <div class="mb-3">
+                    <a class="text-muted small" data-bs-toggle="collapse" href="#productHelp" role="button" aria-expanded="false" aria-controls="productHelp">
+                        <i class="bx bx-help-circle me-1"></i>Can't find a product?
+                    </a>
+                    <div class="collapse mt-2" id="productHelp">
+                        <div class="card card-body bg-light small">
+                            <p class="mb-2">Products must meet all of these criteria to appear here:</p>
+                            <ul class="mb-0 ps-3">
+                                <li>Status is set to "Available"</li>
+                                <li>Has a price greater than zero</li>
+                                <li>Has not been deleted</li>
+                                <li>Has a product page that exists and is not deleted</li>
+                                <li>Has a thumbnail image uploaded</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3" id="productGrid">
+                    <?php foreach ($admin['allProducts'] as $product): ?>
+                        <?php $inSlot = $admin['featuredSlotsByProductId'][$product['id']] ?? null; ?>
+                        <div class="col-md-3 col-sm-4 col-6 product-item" data-product-id="<?= $product['id'] ?>" data-title="<?= \htmlspecialchars(\strtolower($product['title'])) ?>">
+                            <div class="card h-100 product-select-card <?= $inSlot ? 'border-secondary bg-light' : '' ?>" style="<?= $inSlot ? 'cursor: not-allowed; opacity: 0.5;' : 'cursor: pointer;' ?>" <?= $inSlot ? '' : 'data-call="selectProduct" data-args=\'[' . (int) $product['id'] . ']\'' ?>>
+                                <?php if ($inSlot): ?>
+                                    <span class="badge bg-secondary position-absolute" style="top: 5px; right: 5px; z-index: 1;">Slot #<?= $inSlot ?></span>
+                                <?php endif; ?>
+                                <img src="<?= \htmlspecialchars($product['thumbnail'] ?? '') ?>"
+                                    class="card-img-top"
+                                    alt="<?= \htmlspecialchars($product['title'] ?? '') ?>"
+                                    style="height: 100px; object-fit: contain; mix-blend-mode: multiply;">
+                                <div class="card-body p-2 text-center">
+                                    <small class="text-truncate d-block" title="<?= \htmlspecialchars($product['title'] ?? '') ?>">
+                                        <?= \htmlspecialchars($product['title'] ?? '') ?>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" id="clearSlotBtn" style="display: none;" data-call="clearSlot">
+                    <i class="bx bx-trash me-1"></i> Clear Slot
+                </button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

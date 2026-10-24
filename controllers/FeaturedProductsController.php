@@ -103,22 +103,18 @@ class FeaturedProductsController extends AdminController
         return $slot;
     }
 
-    /** Products an admin may pick: each needs a live page and an uploaded thumbnail as well as a price and availability */
+    /** Products an admin may pick: each needs a live page as well as a price and availability. A missing thumbnail is flagged, not hidden */
     private function selectableProducts(FeaturedProduct $featured, array $pagesById, string $imagesPath): array
     {
-        $existing = [];
-        foreach (\glob($_SERVER['DOCUMENT_ROOT'] . $imagesPath . '/shop/*/*/thumb/*.jpg') ?: [] as $file) {
-            $existing[\basename($file)] = true;
-        }
-
         $selectable = [];
         foreach ($featured->listSelectableProducts() as $product) {
             $thumbnail = FeaturedRules::thumbnailPath($product['brand_name'] ?? '', $product['model_name'] ?? '');
             $page = $pagesById[$product['page_id']] ?? null;
             $hasLivePage = $product['page_id'] && $page && $page['deleted_at'] === null;
-            if (!$hasLivePage || !isset($existing[\basename($thumbnail)])) continue;
+            if (!$hasLivePage) continue;
 
             $product['thumbnail'] = $imagesPath . $thumbnail;
+            $product['has_thumbnail'] = \file_exists($_SERVER['DOCUMENT_ROOT'] . $product['thumbnail']);
             $product['title'] = $product['brand_name'] . ' ' . $product['model_name'];
             $selectable[] = $product;
         }

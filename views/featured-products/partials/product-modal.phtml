@@ -21,7 +21,6 @@
                                 <li>Has a price greater than zero</li>
                                 <li>Has not been deleted</li>
                                 <li>Has a product page that exists and is not deleted</li>
-                                <li>Has a thumbnail image uploaded</li>
                             </ul>
                         </div>
                     </div>
@@ -34,10 +33,17 @@
                                 <?php if ($inSlot): ?>
                                     <span class="badge bg-secondary position-absolute" style="top: 5px; right: 5px; z-index: 1;">Slot #<?= $inSlot ?></span>
                                 <?php endif; ?>
-                                <img src="<?= \htmlspecialchars($product['thumbnail'] ?? '') ?>"
-                                    class="card-img-top"
-                                    alt="<?= \htmlspecialchars($product['title'] ?? '') ?>"
-                                    style="height: 100px; object-fit: contain; mix-blend-mode: multiply;">
+                                <?php if (!$product['has_thumbnail']): ?>
+                                    <span class="badge bg-warning position-absolute" style="top: 5px; left: 5px; z-index: 1;">No image</span>
+                                <?php endif; ?>
+                                <?php if ($product['has_thumbnail']): ?>
+                                    <img src="<?= \htmlspecialchars($product['thumbnail'] ?? '') ?>"
+                                        class="card-img-top"
+                                        alt="<?= \htmlspecialchars($product['title'] ?? '') ?>"
+                                        style="height: 100px; object-fit: contain; mix-blend-mode: multiply;">
+                                <?php else: ?>
+                                    <div class="d-flex align-items-center justify-content-center bg-body-tertiary text-muted" style="height: 100px;"><i class="bx bx-image" style="font-size: 2rem;"></i></div>
+                                <?php endif; ?>
                                 <div class="card-body p-2 text-center">
                                     <small class="text-truncate d-block" title="<?= \htmlspecialchars($product['title'] ?? '') ?>">
                                         <?= \htmlspecialchars($product['title'] ?? '') ?>

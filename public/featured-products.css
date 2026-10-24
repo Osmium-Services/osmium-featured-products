@@ -7,7 +7,7 @@
 }
 
 .featured-product-slot:hover {
-    background-color: #f8f9fa !important;
+    background-color: var(--bs-tertiary-bg) !important;
 }
 
 .product-select-card {
@@ -18,4 +18,11 @@
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1;
+}
+
+/* Product photos sit on white; multiply only works on a light page, so drop it in dark mode */
+[data-bs-theme=dark] .featured-product-slot img,
+[data-bs-theme=dark] .product-select-card img {
+    mix-blend-mode: normal !important;
+    background: #fff;
 }

@@ -1,7 +1,7 @@
 {
     "id": "osmium-featured-products",
     "name": "Osmium Featured Products",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "A hand-picked list of up to 5 featured products, ordered by drag and drop in admin, with an edit lock for busy admin teams and the list handed to the theme",
     "category": "shop",
     "author": {

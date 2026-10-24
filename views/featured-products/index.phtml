@@ -1,5 +1,5 @@
 <?php
-$pageHeader = ['trail' => 'Content / Shop /', 'title' => 'Featured Products'];
+$pageHeader = ['title' => 'Featured Products'];
 include \Osmium\Core\Library\AdminPaths::view('partials/page-header.phtml');
 include \Osmium\Core\Library\AdminPaths::view('partials/backup-bar.phtml');
 ?>
@@ -33,7 +33,7 @@ include \Osmium\Core\Library\AdminPaths::view('partials/backup-bar.phtml');
             <div class="card-body p-0">
                 <div class="list-group list-group-flush" id="featuredProductsList">
                     <?php foreach ($admin['featuredProducts'] as $index => $slot): ?>
-                        <div class="list-group-item featured-product-slot d-flex align-items-center gap-3 <?= $slot['product_id'] ? '' : 'bg-light' ?> <?= ($slot['has_issues'] ?? false) ? 'border-danger border-2' : '' ?>"
+                        <div class="list-group-item featured-product-slot d-flex align-items-center gap-3 <?= $slot['product_id'] ? '' : 'bg-body-tertiary' ?> <?= ($slot['has_issues'] ?? false) ? 'border-danger border-2' : '' ?>"
                             data-slot-sort="<?= $slot['sort'] ?>"
                             data-product-id="<?= $slot['product_id'] ?? '' ?>">
                             <i class="bx bx-menu drag-handle text-muted" style="cursor: grab;" title="Drag to reorder"></i>
@@ -51,7 +51,7 @@ include \Osmium\Core\Library\AdminPaths::view('partials/backup-bar.phtml');
                                     <?php endif; ?>
                                 </div>
                             <?php else: ?>
-                                <div style="width: 60px; height: 60px; background: #f8f9fa; border-radius: 4px;" class="d-flex align-items-center justify-content-center">
+                                <div style="width: 60px; height: 60px; background: var(--bs-tertiary-bg); border-radius: 4px;" class="d-flex align-items-center justify-content-center">
                                     <i class="bx bx-plus-circle text-muted" style="font-size: 1.5rem;"></i>
                                 </div>
                                 <div class="flex-grow-1 text-muted slot-content" style="cursor: pointer;" data-call="openProductSelector" data-args='["@parent"]'>

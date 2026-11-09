@@ -1,7 +1,7 @@
 # Osmium Featured Products service
 
 A hand-picked list of up to five featured products, in an order set by drag and drop. Repo
-`Osmium-Services/osmium-featured-products`, v0.1.3<!--v:osmium-featured-products--> (crown icon), category shop. Extracted 2026-10-10 from core's Best
+`Osmium-Services/osmium-featured-products`, v0.2.2<!--v:osmium-featured-products--> (crown icon), category shop. Extracted 2026-10-10 from core's Best
 Sellers, renamed because the list is curated, not data-driven. See [[Core and Services]].
 
 ## What it does

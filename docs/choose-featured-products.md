@@ -1,6 +1,7 @@
 ---
 title: Choose your featured products
 tags: featured products, best sellers, homepage, products, slots, drag and drop
+page: admin/featured-products
 ---
 
 **Featured Products** is a hand-picked list of up to five products, which your site's design shows where it chooses, such as the homepage.
